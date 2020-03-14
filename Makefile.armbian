@@ -1,0 +1,3 @@
+OPTS = -DUSE_SSL -DLINKALL -mcpu=native -mfpu=auto
+
+include Makefile
