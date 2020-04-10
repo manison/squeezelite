@@ -19,6 +19,7 @@
  *
  */
 
+#define LOG_COMPONENT	LOG_COMPONENT_DECODE
 #include "squeezelite.h"
 
 #include <neaacdec.h>
@@ -63,8 +64,6 @@ struct faad {
 };
 
 static struct faad *a;
-
-extern log_level loglevel;
 
 extern struct buffer *streambuf;
 extern struct buffer *outputbuf;

@@ -20,6 +20,7 @@
  *
  */
 
+#define LOG_COMPONENT	LOG_COMPONENT_DECODE
 #include "squeezelite.h"
 #if OPUS
 
@@ -56,8 +57,6 @@ struct opus {
 };
 
 static struct opus *u;
-
-extern log_level loglevel;
 
 extern struct buffer *streambuf;
 extern struct buffer *outputbuf;
