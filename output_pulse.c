@@ -183,6 +183,9 @@ static void pulse_stream_state_cb(pa_stream *stream, void *userdata) {
 	}
 }
 
+static void pulse_stream_set_buffer_attr_cb(pa_stream *s, int success, void *userdata) {
+}
+
 static bool pulse_stream_create(struct pulse *p) {
 	char name[500];
 	int c = snprintf(name, sizeof(name) - 1, "squeezelite (%s)", "<playername>");
@@ -212,6 +215,16 @@ static bool pulse_stream_create(struct pulse *p) {
 	}
 
 	ok = ok && p->stream_readiness == readiness_ready;
+
+	if (ok) {
+		pa_buffer_attr attr = { 0, };
+		attr.maxlength = (uint32_t)(-1);
+		attr.tlength = (uint32_t)(-1);
+		attr.prebuf = (uint32_t)(-1);
+		attr.minreq = (uint32_t)(-1);
+		pa_operation *op = pa_stream_set_buffer_attr(p->stream, &attr, pulse_stream_set_buffer_attr_cb, NULL);
+		ok = pulse_operation_wait(&p->conn, op);
+	}
 
 	if (!ok) {
 		pa_stream_disconnect(p->stream);
